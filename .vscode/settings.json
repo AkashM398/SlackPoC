@@ -1,8 +1,10 @@
 {
-    "azureFunctions.deploySubpath": ".",
-    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.deploySubpath": "SlackApi",
+    "azureFunctions.projectLanguage": "Python",
     "azureFunctions.projectRuntime": "~2",
     "debug.internalConsoleOptions": "neverOpen",
     "azureFunctions.preDeployTask": "npm prune",
-    "azureFunctions.templateFilter": "All"
+    "azureFunctions.templateFilter": "All",
+    "azureFunctions.scmDoBuildDuringDeployment": true,
+    "python.pythonPath": "C:\\Users\\Jayesh Sharma\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe"
 }
