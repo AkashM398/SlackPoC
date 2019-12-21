@@ -10,6 +10,12 @@ users = None
 
 def getUsers():
     users =  client.api_call("users.list")
+    channelResponse = client.channels_history(channel='CQZ5CAEVB')
+    print(channelResponse)
+    conversationsResposne = client.conversations_history(channel='GR47G8UKE')
+    print('\n')
+    print('\n')
+    print(conversationsResposne)
     # while(~users.get('ok')):
     #     continue
     membersJson = users.get('members')
@@ -22,13 +28,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     list_response = getUsers()
     name1 = None
-    for response in list_response:
-        try:
-            print(response['real_name'])
-        except  :
-            pass
+    # for response in list_response:
+    #     try:
+    #         print(response['real_name'])
+    #     except  :
+    #         pass
         
-        print('\n')
+    print('\n')
         #name1 = response['real_name']
     
     return func.HttpResponse(f" {name1}!")
