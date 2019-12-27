@@ -21,12 +21,12 @@ def getUsers():
     membersJson = users.get('members')
     membersJson = json.dumps(membersJson)
     parsed = json.loads(str(membersJson))
-    return parsed
+    return channelResponse
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    list_response = getUsers()
+    response = getUsers()
     name1 = None
     # for response in list_response:
     #     try:
@@ -37,5 +37,5 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     print('\n')
         #name1 = response['real_name']
     
-    return func.HttpResponse(f" {name1}!")
+    return func.HttpResponse(f" {response}!")
     
