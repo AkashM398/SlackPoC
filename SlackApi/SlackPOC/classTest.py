@@ -4,21 +4,60 @@ class Entry:
 
     reply_ts = []
     reply_users = []
+    team = 'N/A'
+    thread_ts=''
+    subtype='N/A'
+    reactions_count = 0
+    reply_count =0
+    parent_ts =''
     jsonString = """[
     {
+        "client_msg_id": "5cecc0cc-1dca-4b29-af31-f9bc215ca0a7",
         "type": "message",
-        "subtype": "channel_join",
-        "ts": "1576678032.000200",
-        "user": "URWRFHRFG",
-        "text": "<@URWRFHRFG> has joined the channel"
-    },
-    {
-        "type": "message",
-        "subtype": "channel_join",
-        "ts": "1576686692.003800",
-        "user": "URX433RQW",
-        "text": "<@URX433RQW> has joined the channel",
-        "thread_ts" : "sample",
+        "text": "Getting jdbcconnectionexception while using the access code",
+        "user": "URJNMU3A5",
+        "ts": "1576909543.056500",
+        "team": "TRUKBGCHW",
+        "user_team": "TRUKBGCHW",
+        "source_team": "TRUKBGCHW",
+        "user_profile": {
+            "avatar_hash": "gf6357885a50",
+            "image_72": "https:\/\/secure.gravatar.com\/avatar\/f6357885a5041d5193232008e7c8f097.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0004-72.png",
+            "first_name": "",
+            "real_name": "Eswar",
+            "display_name": "",
+            "team": "TRUKBGCHW",
+            "name": "eswarsaladi041",
+            "is_restricted": false,
+            "is_ultra_restricted": false
+        },
+        "blocks": [
+            {
+                "type": "rich_text",
+                "block_id": "=Uhq",
+                "elements": [
+                    {
+                        "type": "rich_text_section",
+                        "elements": [
+                            {
+                                "type": "text",
+                                "text": "Getting jdbcconnectionexception while using the access code"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "thread_ts": "1576909543.056500",
+        "reply_count": 4,
+        "reply_users_count": 4,
+        "latest_reply": "1576910127.057500",
+        "reply_users": [
+            "URWCKPER3",
+            "URXPYB5FW",
+            "URJNMU3A5",
+            "URZ75FMJB"
+        ],
         "replies": [
             {
                 "user": "URWCKPER3",
@@ -36,13 +75,19 @@ class Entry:
                 "user": "URZ75FMJB",
                 "ts": "1576910127.057500"
             }
-        ]
+        ],
+        "subscribed": false
     }
 ]"""
     def assignAttributes(self):
         list_messages = json.loads((self.jsonString))
         i = 0
         print(type(list_messages))
+        with open('slack_dump.csv', 'w', newline= '') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(['ts', 'channel', 'type', 'subtype',\
+                        'user_id', 'user_name', 'user_email', 'team', 'text',\
+                        'reply_count', 'reply_users', 'reply_ts', 'parent_ts', 'reactions_count'])
         for message in list_messages:
                 self.ts = message["ts"]
                 self.userId = message['user']
@@ -79,7 +124,13 @@ class Entry:
                         self.reactions_count += reaction['count'] 
                 except:
                     pass
-
+                
+                with open('slack_dump.csv', 'w', newline= '') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([self.ts, 'channel', self.type, self.subtype,\
+                        self.userId, 'user_name', 'user_email', self.team, self.text,\
+                        self.reply_count, self.reply_users, self.reply_ts, self.parent_ts, self.reactions_count])
+                
         return 
     
     def printAttr(self):
