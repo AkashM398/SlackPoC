@@ -83,9 +83,9 @@ class Entry:
         list_messages = json.loads((self.jsonString))
         i = 0
         print(type(list_messages))
-        with open('slack_dump.csv', 'w', newline= '') as file:
-                    writer = csv.writer(file)
-                    writer.writerow(['ts', 'channel', 'type', 'subtype',\
+        file = open('slack_dump.csv', 'w', newline= '')
+        writer = csv.writer(file)
+        writer.writerow(['ts', 'channel', 'type', 'subtype',\
                         'user_id', 'user_name', 'user_email', 'team', 'text',\
                         'reply_count', 'reply_users', 'reply_ts', 'parent_ts', 'reactions_count'])
         for message in list_messages:
@@ -125,9 +125,8 @@ class Entry:
                 except:
                     pass
                 
-                with open('slack_dump.csv', 'w', newline= '') as file:
-                    writer = csv.writer(file)
-                    writer.writerow([self.ts, 'channel', self.type, self.subtype,\
+                
+                writer.writerow([self.ts, 'channel', self.type, self.subtype,\
                         self.userId, 'user_name', 'user_email', self.team, self.text,\
                         self.reply_count, self.reply_users, self.reply_ts, self.parent_ts, self.reactions_count])
                 
