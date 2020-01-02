@@ -10,12 +10,60 @@ class Entry:
     reactions_count = 0
     reply_count =0
     parent_ts =''
+    users_json =  """[
+    {
+        "id": "URG3Z1C3C",
+        "team_id": "TRUKBGCHW",
+        "name": "akashm1999",
+        "deleted": false,
+        "color": "3c989f",
+        "real_name": "Akash M",
+        "tz": "Asia\/Kolkata",
+        "tz_label": "India Standard Time",
+        "tz_offset": 19800,
+        "profile": {
+            "title": "",
+            "phone": "",
+            "skype": "",
+            "real_name": "Akash M",
+            "real_name_normalized": "Akash M",
+            "display_name": "",
+            "display_name_normalized": "",
+            "fields": null,
+            "status_text": "",
+            "status_emoji": "",
+            "status_expiration": 0,
+            "avatar_hash": "b82a9b7e1e15",
+            "image_original": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_original.jpg",
+            "is_custom_image": true,
+            "email": "akashm1999@gmail.com",
+            "image_24": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_24.jpg",
+            "image_32": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_32.jpg",
+            "image_48": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_48.jpg",
+            "image_72": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_72.jpg",
+            "image_192": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_192.jpg",
+            "image_512": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_512.jpg",
+            "image_1024": "https:\/\/avatars.slack-edge.com\/2019-12-19\/879977032896_b82a9b7e1e15ff369139_1024.jpg",
+            "status_text_canonical": "",
+            "team": "TRUKBGCHW"
+        },
+        "is_admin": false,
+        "is_owner": false,
+        "is_primary_owner": false,
+        "is_restricted": false,
+        "is_ultra_restricted": false,
+        "is_bot": false,
+        "is_app_user": false,
+        "updated": 1576744607
+    }
+]"""
+    #sample json; in production supply actual json 
     jsonString = """[
     {
         "client_msg_id": "5cecc0cc-1dca-4b29-af31-f9bc215ca0a7",
         "type": "message",
         "text": "Getting jdbcconnectionexception while using the access code",
-        "user": "URJNMU3A5",
+        "user": "URG3Z1C3C",
         "ts": "1576909543.056500",
         "team": "TRUKBGCHW",
         "user_team": "TRUKBGCHW",
@@ -125,13 +173,20 @@ class Entry:
                 except:
                     pass
                 
-                
+                self.fetchUserInfo()
                 writer.writerow([self.ts, 'channel', self.type, self.subtype,\
-                        self.userId, 'user_name', 'user_email', self.team, self.text,\
+                        self.userId, self.user_name, self.user_email, self.team, self.text,\
                         self.reply_count, self.reply_users, self.reply_ts, self.parent_ts, self.reactions_count])
                 
         return 
     
+    def fetchUserInfo(self):
+        list_users = json.loads((self.users_json))
+        for user in list_users:
+            if(user['id'] == self.userId):
+                self.user_name = user['real_name']
+                self.user_email = user['profile']['email']
+
     def printAttr(self):
         print(self.reply_ts[0])
 
