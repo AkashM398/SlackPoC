@@ -3,6 +3,7 @@ import json, csv
 class Entry:
 
     reply_ts = []
+    reply_users = []
     jsonString = """[
     {
         "type": "message",
@@ -44,16 +45,41 @@ class Entry:
         print(type(list_messages))
         for message in list_messages:
                 self.ts = message["ts"]
-                self.type = message["type"]
-                self.user = message['user']
+                self.userId = message['user']
                 self.text = message['text']
-                self.subtype = message['subtype']
+                self.type = message['type']
                 try:
-                    self.thread_ts = message['thread_ts']
+                    self.subtype = message["subtype"]
+                except:
+                    pass
+                try:
+                    self.team = message['team']
+                except:
+                    pass
+                try:
+                    self.reply_count = message['reply_count']
+                except:
+                    pass
+                try:
+                    self.parent_ts = message['thread_ts']
+                except:
+                    pass
+                try:
                     for reply in message['replies']:
                         self.reply_ts.append(reply['ts'])
                 except:
                     pass
+                try:
+                    for user in message['reply_users']:
+                        self.reply_users.append(user)
+                except:
+                    pass
+                try:
+                    for reaction in message['reactions']:
+                        self.reactions_count += reaction['count'] 
+                except:
+                    pass
+
         return 
     
     def printAttr(self):
