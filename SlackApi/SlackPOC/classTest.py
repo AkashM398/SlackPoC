@@ -129,8 +129,6 @@ class Entry:
 ]"""
     def assignAttributes(self):
         list_messages = json.loads((self.jsonString))
-        i = 0
-        print(type(list_messages))
         file = open('slack_dump.csv', 'w', newline= '')
         writer = csv.writer(file)
         writer.writerow(['ts', 'channel', 'type', 'subtype',\
@@ -187,11 +185,6 @@ class Entry:
                 self.user_name = user['real_name']
                 self.user_email = user['profile']['email']
 
-    def printAttr(self):
-        print(self.reply_ts[0])
-
-    def main(self):
-        print("wtf")
         
 obj = Entry()
 obj.assignAttributes()
